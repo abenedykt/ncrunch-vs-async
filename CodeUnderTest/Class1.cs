@@ -13,12 +13,21 @@ namespace CodeUnderTest
 
 	    public async Task<string> Execute()
 	    {
+		    await Other();
 		    var millisecondsDelay = await SomeLongOperation();
 
 		    return await Task.Factory.StartNew(() =>
 		    {
 			    Task.Delay(millisecondsDelay);
 			    return _message;
+		    });
+	    }
+
+	    private static Task Other()
+	    {
+		    return Task.Factory.StartNew(() =>
+		    {
+			    Task.Delay(100);
 		    });
 	    }
 
